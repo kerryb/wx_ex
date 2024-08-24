@@ -8,7 +8,7 @@ defmodule WxEx.MixProject do
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      compilers: [:elixir, :wx, :erlang]
+      compilers: [:elixir, :wx, :erlang, :app]
     ]
   end
 
