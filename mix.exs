@@ -29,7 +29,7 @@ defmodule WxEx.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.31", only: :dev, runtime: false},
-      {:wx_ex_compiler, github: "kerryb/wx_ex_compiler"}
+      {:wx_ex_compiler, "> 0.0.0", runtime: false}
     ]
   end
 
