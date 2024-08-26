@@ -1,4 +1,4 @@
-![Build](https://img.shields.io/github/actions/workflow/status/kerryb/wx_ex/build)
+![Build](https://img.shields.io/github/actions/workflow/status/kerryb/wx_ex/elixir.yml)
 
 # WxEx
 
