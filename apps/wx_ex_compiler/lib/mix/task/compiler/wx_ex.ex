@@ -43,7 +43,7 @@ defmodule Mix.Tasks.Compile.WxEx do
     ''')
 
     @wx_header_path
-    |> File.stream!(:line)
+    |> File.stream!()
     |> Stream.filter(&is_constant_macro?/1)
     |> Enum.each(fn line ->
       IO.write(wx_erl_constants, generate_erl_function(line))
