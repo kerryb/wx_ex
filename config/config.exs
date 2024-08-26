@@ -9,4 +9,10 @@
 # move said applications out of the umbrella.
 import Config
 
-config :wx_ex_core, root: Path.join([File.cwd!(), "apps", "wx_ex_core"])
+# Sample configuration:
+#
+#     config :logger, :console,
+#       level: :info,
+#       format: "$date $time [$level] $metadata$message\n",
+#       metadata: [:user_id]
+#
