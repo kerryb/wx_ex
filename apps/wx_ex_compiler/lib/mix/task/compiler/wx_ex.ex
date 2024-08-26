@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Compile.Wx do
+defmodule Mix.Tasks.Compile.WxEx do
   @moduledoc """
   Compiler to produce an erlang source file in `src/wx_constants.erl`,
   containing wrapper functions for all the wxWidgets static macros.
@@ -6,8 +6,18 @@ defmodule Mix.Tasks.Compile.Wx do
   use Mix.Task.Compiler
 
   @wx_header_path :code.lib_dir(~C"wx") |> to_string() |> Path.join("include/wx.hrl")
-  @wx_constants_erl_path "src/wx_constants.erl"
-  @wx_constants_ex_path "lib/generated/wx_ex/constants.ex"
+  @wx_constants_erl_path Path.join([
+                           Application.compile_env(:wx_ex_core, :root),
+                           "src",
+                           "wx_constants.erl"
+                         ])
+  @wx_constants_ex_path Path.join([
+                          Application.compile_env(:wx_ex_core, :root),
+                          "lib",
+                          "generated",
+                          "wx_ex",
+                          "constants.ex"
+                        ])
 
   def run(_args) do
     @wx_constants_erl_path |> Path.dirname() |> File.mkdir_p!()

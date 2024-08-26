@@ -20,7 +20,11 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-wx_ex-*.tar
+wx_ex_compiler-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Generated source
+src
+lib/generated
