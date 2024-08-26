@@ -2,7 +2,7 @@
 
 # WxEx
 
-Elixir wrappers for the erlang macros in the `wx` package.
+Elixir wrappers for the Erlang macros in the `wx` package.
 
 this library doesn’t wrap any of `wx`’s functions, but exposes the macros for
 constants like `?wxAll` as normal elixir functions (it’s not possible to call
@@ -15,7 +15,7 @@ Add `wx_ex` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:wx_ex, "~> 0.1.0", github: "kerryb/wx_wx"}
+    {:wx_ex, "~> 0.1.0", runtime: false}
   ]
 end
 ```
@@ -23,7 +23,7 @@ end
 ## Usage
 
 ```elixir
-import Bitwise
+import Bitwise # to allow ORing of flags with |||
 import WxEx.Constants
 
 panel = :wxPanel.new(frame)
