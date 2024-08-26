@@ -1,3 +1,5 @@
+![Build](https://img.shields.io/github/actions/workflow/status/kerryb/wx_ex/elixir)
+
 # WxEx
 
 Elixir wrappers for the erlang macros in the `wx` package.
