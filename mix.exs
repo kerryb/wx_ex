@@ -3,19 +3,26 @@ defmodule WxEx.MixProject do
 
   def project do
     [
-      apps_path: "apps",
+      app: :wx_ex_core,
       version: "0.1.0",
+      elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      compilers: [:wx_ex | Mix.compilers()]
     ]
   end
 
-  # Dependencies listed here are available only for this
-  # project and cannot be accessed from applications inside
-  # the apps folder.
-  #
-  # Run "mix help deps" for examples and options.
+  # Run "mix help compile.app" to learn about applications.
+  def application do
+    [
+      extra_applications: [:logger, :wx]
+    ]
+  end
+
+  # Run "mix help deps" to learn about dependencies.
   defp deps do
-    []
+    [
+      {:wx_ex_compiler, github: "kerryb/wx_ex_compiler"}
+    ]
   end
 end

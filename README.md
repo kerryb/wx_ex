@@ -33,3 +33,8 @@ sizer = :wxBoxSizer.new(wxHORIZONTAL())
 
  # etc
  ```
+
+## Development
+
+This library depends on `wx_ex_compiler`, which generates source files and was
+extracted to avoid circular compiler dependencies.
