@@ -1,21 +1,6 @@
 # WxExCompiler
 
-**TODO: Add description**
+The Mix compiler that generates the wrapper code.
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `wx_ex_compiler` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:wx_ex_compiler, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/wx_ex_compiler>.
-
+This is a separate app in an umbrella to allow it to be compiled separately
+from the later step where the generated source is compiled.
