@@ -1,6 +1,5 @@
 # Used by "mix format"
 [
   inputs: ["mix.exs", "config/*.exs"],
-  subdirectories: ["apps/*"],
-  plugins: [Styler]
+  subdirectories: ["apps/*"]
 ]
