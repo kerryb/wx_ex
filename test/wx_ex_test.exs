@@ -15,5 +15,11 @@ defmodule WxExTest do
     test "Generates wrappers for records in src files" do
       assert is_record(WxEx.Records.wx_ref())
     end
+
+    test "Imports all constants and macros with `use WxEx`" do
+      use WxEx
+      assert wxALL() == 240
+      assert is_record(wx())
+    end
   end
 end

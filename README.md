@@ -45,6 +45,14 @@ event = wx() #=> {:wx, :undefined, :undefined, :undefined, :undefined}
 wx(event) #=> [id: :undefined, obj: :undefined, userData: :undefined, event: :undefined]
 ```
 
+### Importing everything
+
+To import all constants and records in one line:
+
+```elixir
+use WxEx
+```
+
 ## Development
 
 This library depends on `wx_ex_compiler`, which generates source files and was
