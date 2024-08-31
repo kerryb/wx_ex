@@ -1,7 +1,5 @@
 ![Build](https://img.shields.io/github/actions/workflow/status/kerryb/wx_ex/elixir.yml)
 
-# WxEx
-
 Elixir wrappers for the Erlang macros in the `wx` package.
 
 this library doesn’t wrap any of `wx`’s functions, but exposes the macros for

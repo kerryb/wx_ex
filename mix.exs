@@ -43,8 +43,8 @@ defmodule WxEx.MixProject do
 
   defp docs do
     [
-      main: "README",
-      extras: ["README.md"]
+      main: "readme",
+      extras: ["README.md": [title: "WxEx"]]
     ]
   end
 end
