@@ -22,6 +22,8 @@ end
 
 ## Usage
 
+### Constants
+
 ```elixir
 import Bitwise # to allow ORing of flags with |||
 import WxEx.Constants
@@ -31,8 +33,17 @@ label = :wxStaticText.new(panel, wxID_ANY(), "A label", style: wxALIGN_RIGHT())
 sizer = :wxBoxSizer.new(wxHORIZONTAL())
 :wxSizer.add(sizer, label, flag: wxALL() ||| wxALIGN_CENTRE(), border: 5)
 
- # etc
- ```
+# etc
+```
+
+### Records
+
+```elixir
+import WxEx.Records
+
+event = wx() #=> {:wx, :undefined, :undefined, :undefined, :undefined}
+wx(event) #=> [id: :undefined, obj: :undefined, userData: :undefined, event: :undefined]
+```
 
 ## Development
 
