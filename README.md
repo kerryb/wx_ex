@@ -1,3 +1,5 @@
+[![Hex.pm](https://img.shields.io/hexpm/v/wx_ex)](https://hex.pm/packages/wx_ex)
+[![Hexdocs.pm](https://img.shields.io/badge/docs-hexdocs.pm-purple)](https://hexdocs.pm/wx_ex)
 ![Build](https://img.shields.io/github/actions/workflow/status/kerryb/wx_ex/elixir.yml)
 
 Elixir wrappers for the Erlang macros in the `wx` package.
