@@ -21,7 +21,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install wxWidgets libraries
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: wx-common
@@ -49,7 +48,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install wxWidgets libraries
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: wx-common
@@ -77,7 +75,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install wxWidgets libraries
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: wx-common
@@ -105,7 +102,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install wxWidgets libraries
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: wx-common
@@ -133,7 +129,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install wxWidgets libraries
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: wx-common
