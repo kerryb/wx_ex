@@ -41,8 +41,8 @@ jobs:
       run: mix deps.get
     - name: Run tests
       uses: coactions/setup-xvfb@v1
-        with:
-          run: mix test
+      with:
+        run: mix test
 
   build-1-14:
 
