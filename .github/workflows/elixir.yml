@@ -21,6 +21,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+    - name: Install wxWidgets libraries
+      with:
+        packages: wx-common
+        version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
       uses: erlef/setup-beam@v1.18.1
@@ -44,6 +49,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+    - name: Install wxWidgets libraries
+      with:
+        packages: wx-common
+        version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
       uses: erlef/setup-beam@v1.18.1
@@ -67,6 +77,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+    - name: Install wxWidgets libraries
+      with:
+        packages: wx-common
+        version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
       uses: erlef/setup-beam@v1.18.1
@@ -90,6 +105,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+    - name: Install wxWidgets libraries
+      with:
+        packages: wx-common
+        version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
       uses: erlef/setup-beam@v1.18.1
@@ -113,6 +133,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+    - name: Install wxWidgets libraries
+      with:
+        packages: wx-common
+        version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
       uses: erlef/setup-beam@v1.18.1
