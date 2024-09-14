@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: GabrielBB/xvfb-action@latest
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: libwxgtk3.0-gtk3-dev
