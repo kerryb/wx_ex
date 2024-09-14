@@ -26,12 +26,13 @@ defmodule WxObject do
   end
 
   def start_link(module, args, options \\ []) do
-    # case options[:name] do
-    # nil ->
-    :wx_object.start_link(module, args, options)
+    case options[:name] do
+      nil ->
+        :wx_object.start_link(module, args, options)
 
-    # name when is_atom(name) -> :wx_object.start_link({:local, name}, module, args, Keyword.delete(options, :name))
-    # end
+      name when is_atom(name) ->
+        :wx_object.start_link({:local, name}, module, args, Keyword.delete(options, :name))
+    end
   end
 
   defdelegate get_pid(ref), to: :wx_object
