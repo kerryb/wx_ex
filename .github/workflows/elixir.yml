@@ -17,7 +17,7 @@ permissions:
 jobs:
   build-1-15:
 
-    name: Build and test
+    name: Build and test (Elixir 1.15; Erlang 26)
     runs-on: ubuntu-latest
 
     steps:
@@ -40,7 +40,7 @@ jobs:
 
   build-1-17:
 
-    name: Build and test
+    name: Build and test (Elixir 1.17; Erlang 27)
     runs-on: ubuntu-latest
 
     steps:
