@@ -52,7 +52,7 @@ jobs:
     steps:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: libwxgtk3.0-dev
+        packages: libwxgtk3.0-gtk3-dev
         version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -69,7 +69,9 @@ jobs:
     - name: Install dependencies
       run: mix deps.get
     - name: Run tests
-      run: mix test
+      uses: coactions/setup-xvfb@v1
+      with:
+        run: mix test
 
   build-1-15:
 
@@ -79,7 +81,7 @@ jobs:
     steps:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: libwxgtk3.0-dev
+        packages: libwxgtk3.0-gtk3-dev
         version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -96,7 +98,9 @@ jobs:
     - name: Install dependencies
       run: mix deps.get
     - name: Run tests
-      run: mix test
+      uses: coactions/setup-xvfb@v1
+      with:
+        run: mix test
 
   build-1-16:
 
@@ -106,7 +110,7 @@ jobs:
     steps:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: libwxgtk2.8-dev libwxgtk2.8-dbg
+        packages: libwxgtk3.0-gtk3-dev
         version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -123,7 +127,9 @@ jobs:
     - name: Install dependencies
       run: mix deps.get
     - name: Run tests
-      run: mix test
+      uses: coactions/setup-xvfb@v1
+      with:
+        run: mix test
 
   build-1-17:
 
@@ -133,7 +139,7 @@ jobs:
     steps:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: libwxgtk2.8-dev libwxgtk2.8-dbg
+        packages: libwxgtk3.0-gtk3-dev
         version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -150,4 +156,6 @@ jobs:
     - name: Install dependencies
       run: mix deps.get
     - name: Run tests
-      run: mix test
+      uses: coactions/setup-xvfb@v1
+      with:
+        run: mix test
