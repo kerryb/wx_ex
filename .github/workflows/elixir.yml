@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: wx-common
+        packages: libwx_gtk3u_stc-3.0
         version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -50,7 +50,7 @@ jobs:
     steps:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: wx-common
+        packages: libwx_gtk3u_stc-3.0
         version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -77,7 +77,7 @@ jobs:
     steps:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: wx-common
+        packages: libwx_gtk3u_stc-3.0
         version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -104,7 +104,7 @@ jobs:
     steps:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: wx-common
+        packages: libwx_gtk3u_stc-3.0
         version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -131,7 +131,7 @@ jobs:
     steps:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: wx-common
+        packages: libwx_gtk3u_stc-3.0
         version: 1.0
     - uses: actions/checkout@v4
     - name: Set up Elixir
