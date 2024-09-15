@@ -47,7 +47,25 @@ defmodule WxObject do
         end
       end
 
-      defoverridable child_spec: 1, handle_call: 3
+      @doc false
+      def handle_cast(msg, state) do
+        proc =
+          case Process.info(self(), :registered_name) do
+            {_, []} -> self()
+            {_, name} -> name
+          end
+
+        # We do this to trick Dialyzer to not complain about non-local returns.
+        case :erlang.phash2(1, 1) do
+          0 ->
+            raise "attempted to cast WxObject #{inspect(proc)} but no handle_cast/2 clause was provided"
+
+          1 ->
+            {:stop, {:bad_cast, msg}, state}
+        end
+      end
+
+      defoverridable child_spec: 1, handle_call: 3, handle_cast: 2
     end
   end
 
@@ -68,6 +86,12 @@ defmodule WxObject do
               | {:stop, reason, new_state}
             when reply: term(), new_state: term(), reason: term()
 
+  @callback handle_cast(request :: term(), state :: term()) ::
+              {:noreply, new_state}
+              | {:noreply, new_state, timeout | :hibernate | {:continue, continue_arg :: term()}}
+              | {:stop, reason :: term(), new_state}
+            when new_state: term()
+
   def start_link(module, args, options \\ []) do
     case options[:name] do
       nil ->
@@ -87,6 +111,15 @@ defmodule WxObject do
     GenServer.call(server, request, timeout)
   catch
     :exit, {{error, stacktrace}, _call} -> reraise error, stacktrace
+  end
+
+  @doc """
+  Casts a request to the server without waiting for a response (see
+  `GenServer.cast/2` for details).
+  """
+  @spec cast(GenServer.server(), term()) :: term
+  def cast(server, request) do
+    GenServer.cast(server, request)
   end
 
   defdelegate get_pid(ref), to: :wx_object
