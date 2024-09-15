@@ -79,52 +79,14 @@ defmodule WxObject do
   end
 
   @doc """
-  Makes a synchronous call to the `server` and waits for its reply.
-
-  The client sends the given `request` to the server and waits until a reply
-  arrives or a timeout occurs. `c:handle_call/3` will be called on the server
-  to handle the request.
-
-  `server` can be any of the values described in the "Name registration"
-  section of the documentation for this module.
-
-  ## Timeouts
-
-  `timeout` is an integer greater than zero which specifies how many
-  milliseconds to wait for a reply, or the atom `:infinity` to wait
-  indefinitely. The default value is `5000`. If no reply is received within
-  the specified time, the function call fails and the caller exits. If the
-  caller catches the failure and continues running, and the server is just late
-  with the reply, it may arrive at any time later into the caller's message
-  queue. The caller must in this case be prepared for this and discard any such
-  garbage messages that are two-element tuples with a reference as the first
-  element.
+  Makes a synchronous call to the server and waits for its reply (see
+  `GenServer.call/3` for details).
   """
   @spec call(GenServer.server(), term(), timeout()) :: term
-  def call(server, request, timeout \\ 5000)
-      when (is_integer(timeout) and timeout >= 0) or timeout == :infinity do
-    case GenServer.whereis(server) do
-      nil ->
-        exit({:noproc, {__MODULE__, :call, [server, request, timeout]}})
-
-      pid ->
-        try do
-          :wx_object.call(pid, request, timeout)
-        rescue
-          e ->
-            case e do
-              %{original: {{%RuntimeError{} = error, stacktrace}, _call}} ->
-                reraise error, stacktrace
-
-              _ ->
-                reraise e, __STACKTRACE__
-            end
-        catch
-          :exit, reason ->
-            exit({reason, {__MODULE__, :call, [server, request, timeout]}})
-          {:ok, res} -> res
-        end
-    end
+  def call(server, request, timeout \\ 5000) do
+    GenServer.call(server, request, timeout)
+  catch
+    :exit, {{error, stacktrace}, _call} -> reraise error, stacktrace
   end
 
   defdelegate get_pid(ref), to: :wx_object
