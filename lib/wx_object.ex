@@ -1,7 +1,11 @@
 defmodule WxObject do
   @moduledoc """
-  An Elixir wrapper for Erlang’s `:wx_object` behaviour, inspired by (blatantly
-  ripped off from) `GenServer` etc.
+  An Elixir wrapper for Erlang’s `:wx_object` behaviour, inspired by
+  `GenServer` etc.
+
+  Does not yet support 100% of `:wx_object`’s API.
+
+  TODO: add note about root object having to return a pid to be supervised.
   """
 
   import WxEx.Records
@@ -31,57 +35,7 @@ defmodule WxObject do
         Supervisor.child_spec(default, unquote(Macro.escape(opts)))
       end
 
-      @doc false
-      def handle_call(msg, _from, state) do
-        proc =
-          case Process.info(self(), :registered_name) do
-            {_, []} -> self()
-            {_, name} -> name
-          end
-
-        # We do this to trick Dialyzer to not complain about non-local returns.
-        case :erlang.phash2(1, 1) do
-          0 ->
-            raise RuntimeError,
-                  "attempted to call WxObject #{inspect(proc)} but no handle_call/3 clause was provided"
-
-          1 ->
-            {:stop, {:bad_call, msg}, state}
-        end
-      end
-
-      @doc false
-      def handle_cast(msg, state) do
-        proc =
-          case Process.info(self(), :registered_name) do
-            {_, []} -> self()
-            {_, name} -> name
-          end
-
-        # We do this to trick Dialyzer to not complain about non-local returns.
-        case :erlang.phash2(1, 1) do
-          0 ->
-            raise "attempted to cast WxObject #{inspect(proc)} but no handle_cast/2 clause was provided"
-
-          1 ->
-            {:stop, {:bad_cast, msg}, state}
-        end
-      end
-
-      @doc false
-      def handle_info(msg, state) do
-        proc =
-          case Process.info(self(), :registered_name) do
-            {_, []} -> self()
-            {_, name} -> name
-          end
-
-        Logger.error("WxObject #{inspect(proc)} received unexpected message in handle_info/2: #{inspect(msg)}")
-
-        {:noreply, state}
-      end
-
-      defoverridable child_spec: 1, handle_call: 3, handle_cast: 2, handle_info: 2
+      defoverridable child_spec: 1
     end
   end
 
@@ -112,34 +66,24 @@ defmodule WxObject do
               | {:stop, reason :: term(), new_state}
             when new_state: term()
 
+  @optional_callbacks handle_call: 3, handle_cast: 2, handle_info: 2
+
   def start_link(module, args, options \\ []) do
-    case options[:name] do
-      nil ->
-        :wx_object.start_link(module, args, options)
-
-      name when is_atom(name) ->
-        :wx_object.start_link({:local, name}, module, args, Keyword.delete(options, :name))
-    end
+    :wx_object.start_link(module, args, options)
   end
 
   @doc """
-  Makes a synchronous call to the server and waits for its reply (see
-  `GenServer.call/3` for details).
+  Make a synchronous call to the server and wait for its reply.
   """
-  @spec call(GenServer.server(), term(), timeout()) :: term
-  def call(server, request, timeout \\ 5000) do
-    GenServer.call(server, request, timeout)
-  catch
-    :exit, {{error, stacktrace}, _call} -> reraise error, stacktrace
-  end
+  @spec call(:wx.wx_object(), term(), timeout()) :: term
+  defdelegate call(obj, request, timeout \\ 5000), to: :wx_object
 
   @doc """
-  Casts a request to the server without waiting for a response (see
-  `GenServer.cast/2` for details).
+  Cast a request to the server without waiting for a response.
   """
-  @spec cast(GenServer.server(), term()) :: term
-  defdelegate cast(server, request), to: GenServer
+  @spec cast(:wx.wx_object(), term()) :: term
+  defdelegate cast(obj, request), to: :wx_object
 
   @spec get_pid(:wx.wx_object() | atom() | pid()) :: pid()
-  defdelegate get_pid(ref), to: :wx_object
+  defdelegate get_pid(obj), to: :wx_object
 end
