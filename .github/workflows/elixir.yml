@@ -42,7 +42,7 @@ jobs:
     - name: Run tests
       uses: coactions/setup-xvfb@v1
       with:
-        run: mix test
+        run: make
 
   build-1-14:
 
@@ -71,7 +71,7 @@ jobs:
     - name: Run tests
       uses: coactions/setup-xvfb@v1
       with:
-        run: mix test
+        run: make
 
   build-1-15:
 
@@ -100,7 +100,7 @@ jobs:
     - name: Run tests
       uses: coactions/setup-xvfb@v1
       with:
-        run: mix test
+        run: make
 
   build-1-16:
 
@@ -129,7 +129,7 @@ jobs:
     - name: Run tests
       uses: coactions/setup-xvfb@v1
       with:
-        run: mix test
+        run: make
 
   build-1-17:
 
@@ -158,4 +158,4 @@ jobs:
     - name: Run tests
       uses: coactions/setup-xvfb@v1
       with:
-        run: mix test
+        run: make
