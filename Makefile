@@ -4,4 +4,4 @@ checks:
 	mix format --check-formatted
 	mix dialyzer --format dialyxir
 test:
-	mix test
+	mix coveralls.html
