@@ -140,5 +140,6 @@ defmodule WxObject do
   @spec cast(GenServer.server(), term()) :: term
   defdelegate cast(server, request), to: GenServer
 
+  @spec get_pid(:wx.wx_object() | atom() | pid()) :: pid()
   defdelegate get_pid(ref), to: :wx_object
 end
