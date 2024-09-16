@@ -1,8 +1,10 @@
 defmodule WxObjectTest do
   use ExUnit.Case, async: true
+
   import ExUnit.CaptureLog
 
   defmodule BasicWxObject do
+    @moduledoc false
     use WxObject
 
     def start_link(args) do
@@ -18,6 +20,7 @@ defmodule WxObjectTest do
   end
 
   defmodule FullWxObject do
+    @moduledoc false
     use WxObject
 
     def start_link(args) do

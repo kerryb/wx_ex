@@ -1,6 +1,8 @@
 defmodule WxExTest do
   use ExUnit.Case, async: true
+
   import Record
+
   require WxEx.Records
 
   describe "WxEx" do
@@ -18,6 +20,7 @@ defmodule WxExTest do
 
     test "Imports all constants and macros with `use WxEx`" do
       use WxEx
+
       assert wxALL() == 240
       assert is_record(wx())
     end

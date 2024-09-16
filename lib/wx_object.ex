@@ -9,7 +9,9 @@ defmodule WxObject do
   defmacro __using__(opts) do
     quote location: :keep, bind_quoted: [opts: opts] do
       @behaviour WxObject
+
       use WxEx
+
       require Logger
 
       unless Module.has_attribute?(__MODULE__, :doc) do
@@ -74,9 +76,7 @@ defmodule WxObject do
             {_, name} -> name
           end
 
-        Logger.error(
-          "WxObject #{inspect(proc)} received unexpected message in handle_info/2: #{inspect(msg)}"
-        )
+        Logger.error("WxObject #{inspect(proc)} received unexpected message in handle_info/2: #{inspect(msg)}")
 
         {:noreply, state}
       end
@@ -87,15 +87,13 @@ defmodule WxObject do
 
   @callback init(args :: term()) ::
               {record(:wx_ref, ref: term(), type: term(), state: term()), state: term()}
-              | {record(:wx_ref, ref: term(), type: term(), state: term()), state :: term(),
-                 timeout() | :hibernate}
+              | {record(:wx_ref, ref: term(), type: term(), state: term()), state :: term(), timeout() | :hibernate}
               | {:stop, reason :: term()}
               | :ignore
 
   @callback handle_call(request :: term(), from :: GenServer.server(), state :: term()) ::
               {:reply, reply, new_state}
-              | {:reply, reply, new_state,
-                 timeout | :hibernate | {:continue, continue_arg :: term()}}
+              | {:reply, reply, new_state, timeout | :hibernate | {:continue, continue_arg :: term()}}
               | {:noreply, new_state}
               | {:noreply, new_state, timeout | :hibernate | {:continue, continue_arg :: term()}}
               | {:stop, reason, reply, new_state}
