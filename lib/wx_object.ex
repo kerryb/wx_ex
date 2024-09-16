@@ -10,6 +10,7 @@ defmodule WxObject do
     quote location: :keep, bind_quoted: [opts: opts] do
       @behaviour WxObject
       use WxEx
+      require Logger
 
       unless Module.has_attribute?(__MODULE__, :doc) do
         @doc """
@@ -65,7 +66,22 @@ defmodule WxObject do
         end
       end
 
-      defoverridable child_spec: 1, handle_call: 3, handle_cast: 2
+      @doc false
+      def handle_info(msg, state) do
+        proc =
+          case Process.info(self(), :registered_name) do
+            {_, []} -> self()
+            {_, name} -> name
+          end
+
+        Logger.error(
+          "WxObject #{inspect(proc)} received unexpected message in handle_info/2: #{inspect(msg)}"
+        )
+
+        {:noreply, state}
+      end
+
+      defoverridable child_spec: 1, handle_call: 3, handle_cast: 2, handle_info: 2
     end
   end
 
@@ -87,6 +103,12 @@ defmodule WxObject do
             when reply: term(), new_state: term(), reason: term()
 
   @callback handle_cast(request :: term(), state :: term()) ::
+              {:noreply, new_state}
+              | {:noreply, new_state, timeout | :hibernate | {:continue, continue_arg :: term()}}
+              | {:stop, reason :: term(), new_state}
+            when new_state: term()
+
+  @callback handle_info(msg :: :timeout | term(), state :: term()) ::
               {:noreply, new_state}
               | {:noreply, new_state, timeout | :hibernate | {:continue, continue_arg :: term()}}
               | {:stop, reason :: term(), new_state}
@@ -118,9 +140,7 @@ defmodule WxObject do
   `GenServer.cast/2` for details).
   """
   @spec cast(GenServer.server(), term()) :: term
-  def cast(server, request) do
-    GenServer.cast(server, request)
-  end
+  defdelegate cast(server, request), to: GenServer
 
   defdelegate get_pid(ref), to: :wx_object
 end

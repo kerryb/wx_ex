@@ -39,6 +39,11 @@ defmodule WxObjectTest do
       send(from, :pong)
       {:noreply, state}
     end
+
+    def handle_info({:ding, from}, state) do
+      send(from, :dong)
+      {:noreply, state}
+    end
   end
 
   describe "WxObject" do
@@ -81,7 +86,22 @@ defmodule WxObjectTest do
                refute_receive(:pong)
              end) =~
                "attempted to cast WxObject #{inspect(pid)} but no handle_cast/2 clause was provided"
+    end
 
+    test "forwards other messages" do
+      pid = start_supervised!(FullWxObject)
+      send(pid, {:ding, self()})
+      assert_receive :dong
+    end
+
+    test "logs messages when handle_info/2 is not implemented" do
+      pid = start_supervised!(BasicWxObject)
+
+      assert capture_log(fn ->
+               send(pid, :ding)
+               refute_receive(:pong)
+             end) =~
+               "WxObject #{inspect(pid)} received unexpected message in handle_info/2: :ding"
     end
   end
 end
