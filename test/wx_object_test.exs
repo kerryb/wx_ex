@@ -7,11 +7,7 @@ defmodule WxObjectTest do
 
     def start_link(args), do: WxObject.start_link(__MODULE__, args)
 
-    def init(_arg) do
-      :wx.new()
-      frame = :wxFrame.new(:wx.null(), 1, "")
-      {frame, nil}
-    end
+    def init(_arg), do: {:wxFrame.new(:wx.null(), 1, ""), :some_state}
   end
 
   defmodule FullWxObject do
@@ -20,11 +16,7 @@ defmodule WxObjectTest do
 
     def start_link(args), do: WxObject.start_link(__MODULE__, args, name: __MODULE__)
 
-    def init(_arg) do
-      :wx.new()
-      frame = :wxFrame.new(:wx.null(), 1, "")
-      {frame, nil}
-    end
+    def init(_arg), do: {:wxFrame.new(:wx.null(), 1, ""), :some_state}
 
     def handle_call(:ping, _from, state), do: {:reply, :pong, state}
 
@@ -40,6 +32,11 @@ defmodule WxObjectTest do
   end
 
   describe "WxObject" do
+    setup do
+      :wx.new()
+      :ok
+    end
+
     test "Wraps :wx_object.start_link/3, and generates a default child_spec/1 implementation" do
       obj = WxObject.start_link(BasicWxObject, [])
       assert is_pid(WxObject.get_pid(obj))
