@@ -32,6 +32,11 @@ defmodule WxObjectTest do
     end
 
     @impl WxObject
+    def handle_sync_event(_event, _ref, state) do
+      {:noreply, state}
+    end
+
+    @impl WxObject
     def handle_call(:ping, _from, state), do: {:reply, :pong, state}
 
     @impl WxObject
@@ -82,6 +87,11 @@ defmodule WxObjectTest do
       obj = WxObject.start_link(FullWxObject, self())
       obj |> WxObject.get_pid() |> send({:wx, 1, {:wx_ref, 35, :wxFrame, []}, [], {:wxClose, :close_window}})
       assert_receive :pong
+    end
+
+    test "forwards synchronous events" do
+      # Can’t figure out how to test this with an actual event
+      assert FullWxObject.handle_sync_event(:an_event, :ref, :state) == {:noreply, :state}
     end
 
     test "forwards calls" do

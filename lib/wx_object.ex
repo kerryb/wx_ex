@@ -63,6 +63,12 @@ defmodule WxObject do
               | {:noreply, new_state :: term(), timeout() | :hibernate}
               | {:stop, reason :: term(), new_state :: term()}
 
+  @callback handle_sync_event(
+              request :: record(:wx, id: integer(), obj: :wx.wx_object(), userData: term(), event: tuple()),
+              ref :: record(:wx_ref, ref: term(), type: term(), state: term()),
+              state :: term()
+            ) :: :ok
+
   @callback handle_call(request :: term(), from :: GenServer.server(), state :: term()) ::
               {:reply, reply, new_state}
               | {:reply, reply, new_state, timeout | :hibernate | {:continue, continue_arg :: term()}}
@@ -87,7 +93,7 @@ defmodule WxObject do
   @callback terminate(reason, state :: term()) :: term()
             when reason: :normal | :shutdown | {:shutdown, term()} | term()
 
-  @optional_callbacks handle_call: 3, handle_cast: 2, handle_info: 2, terminate: 2
+  @optional_callbacks handle_sync_event: 3, handle_call: 3, handle_cast: 2, handle_info: 2, terminate: 2
 
   def start_link(name, module, args, options) when is_atom(module),
     do: :wx_object.start_link({:local, name}, module, args, options)
