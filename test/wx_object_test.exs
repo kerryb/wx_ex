@@ -5,28 +5,44 @@ defmodule WxObjectTest do
     @moduledoc false
     use WxObject
 
-    def start_link(args), do: WxObject.start_link(__MODULE__, args)
+    def start_link(_arg), do: WxObject.start_link(__MODULE__, [], name: __MODULE__)
 
-    def init(_arg), do: {:wxFrame.new(:wx.null(), 1, ""), :some_state}
+    @impl WxObject
+    def init(_args), do: {:wxFrame.new(:wx.null(), 1, ""), %{}}
+
+    @impl WxObject
+    def handle_event(_event, state), do: {:noreply, state}
   end
 
   defmodule FullWxObject do
     @moduledoc false
     use WxObject
 
-    def start_link(args), do: WxObject.start_link(__MODULE__, args, name: __MODULE__)
+    require Record
 
-    def init(_arg), do: {:wxFrame.new(:wx.null(), 1, ""), :some_state}
+    def start_link(parent_pid), do: WxObject.start_link(__MODULE__, [parent_pid])
 
-    def handle_call(:ping, _from, state), do: {:reply, :pong, state}
+    @impl WxObject
+    def init(parent_pid), do: {:wxFrame.new(:wx.null(), 1, ""), %{parent: parent_pid}}
 
-    def handle_cast({:ping, from}, state) do
-      send(from, :pong)
+    @impl WxObject
+    def handle_event({:wx, _, _, _, _}, state) do
+      send(state.parent, :pong)
       {:noreply, state}
     end
 
-    def handle_info({:ding, from}, state) do
-      send(from, :dong)
+    @impl WxObject
+    def handle_call(:ping, _from, state), do: {:reply, :pong, state}
+
+    @impl WxObject
+    def handle_cast(:ping, state) do
+      send(state.parent, :pong)
+      {:noreply, state}
+    end
+
+    @impl WxObject
+    def handle_info(:ping, state) do
+      send(state.parent, :pong)
       {:noreply, state}
     end
   end
@@ -42,21 +58,27 @@ defmodule WxObjectTest do
       assert is_pid(WxObject.get_pid(obj))
     end
 
+    test "forwards events" do
+      obj = WxObject.start_link(FullWxObject, self())
+      obj |> WxObject.get_pid() |> send({:wx, 1, {:wx_ref, 35, :wxFrame, []}, [], {:wxClose, :close_window}})
+      assert_receive :pong
+    end
+
     test "forwards calls" do
-      obj = WxObject.start_link(FullWxObject, [])
+      obj = WxObject.start_link(FullWxObject, self())
       assert WxObject.call(obj, :ping) == :pong
     end
 
     test "forwards casts" do
-      obj = WxObject.start_link(FullWxObject, [])
-      WxObject.cast(obj, {:ping, self()})
+      obj = WxObject.start_link(FullWxObject, self())
+      WxObject.cast(obj, :ping)
       assert_receive :pong
     end
 
     test "forwards other messages" do
-      obj = WxObject.start_link(FullWxObject, [])
-      obj |> WxObject.get_pid() |> send({:ding, self()})
-      assert_receive :dong
+      obj = WxObject.start_link(FullWxObject, self())
+      obj |> WxObject.get_pid() |> send(:ping)
+      assert_receive :pong
     end
 
     test "ignores messages when handle_info/2 is not implemented" do

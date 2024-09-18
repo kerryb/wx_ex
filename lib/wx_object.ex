@@ -45,6 +45,14 @@ defmodule WxObject do
               | {:stop, reason :: term()}
               | :ignore
 
+  @callback handle_event(
+              request :: record(:wx, id: integer(), obj: :wx.wx_object(), userData: term(), event: tuple()),
+              state :: term()
+            ) ::
+              {:noreply, new_state :: term()}
+              | {:noreply, new_state :: term(), timeout() | :hibernate}
+              | {:stop, reason :: term(), new_state :: term()}
+
   @callback handle_call(request :: term(), from :: GenServer.server(), state :: term()) ::
               {:reply, reply, new_state}
               | {:reply, reply, new_state, timeout | :hibernate | {:continue, continue_arg :: term()}}
