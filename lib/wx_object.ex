@@ -3,9 +3,19 @@ defmodule WxObject do
   An Elixir wrapper for Erlang’s `:wx_object` behaviour, inspired by
   `GenServer` etc.
 
-  Does not yet support 100% of `:wx_object`’s API.
+  Does not yet support 100% of `:wx_object`’s API. Specifically,
+  `handle_sync_event/2` is not yet implemented.
 
-  TODO: add note about root object having to return a pid to be supervised.
+  Unlike `GenServer`, `WxObject` returns a `wxWindow` reference rather than a
+  pid. If you want to include your top level object in your supervision tree,
+  you will need to return the pid from `start_link`. For example:
+
+  ```elixir
+  def start_link(_arg) do
+    ref = WxObject.start_link(__MODULE__, nil, name: __MODULE__)
+    {:ok, WxObject.get_pid(ref)}
+  end
+  ```
   """
 
   import WxEx.Records
