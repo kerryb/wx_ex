@@ -15,7 +15,7 @@ Add `wx_ex` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:wx_ex, "~> 0.1.0", runtime: false}
+    {:wx_ex, "~> 0.4.0", runtime: false}
   ]
 end
 ```
@@ -26,7 +26,8 @@ end
 
 ```elixir
 import Bitwise # to allow ORing of flags with |||
-import WxEx.Constants
+import WxEx.Constants.WxWidgets
+import WxEx.Constants.OpenGL
 
 panel = :wxPanel.new(frame)
 label = :wxStaticText.new(panel, wxID_ANY(), "A label", style: wxALIGN_RIGHT())
@@ -52,6 +53,11 @@ To import all constants and records in one line:
 ```elixir
 use WxEx
 ```
+
+### WxObject
+
+`WxObject` is a `GenServer`-style Elixir wrapper round `:wx_object`. It is
+still a work-in-progress.
 
 ## Development
 
