@@ -1,5 +1,7 @@
-.PHONY: dialyzer checks test
-all: checks test
+.PHONY: clean dialyzer checks test
+all: clean checks test
+clean:
+	mix clean
 checks:
 	mix format --check-formatted
 	mix dialyzer --format dialyxir
