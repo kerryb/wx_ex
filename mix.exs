@@ -40,7 +40,7 @@ defmodule WxEx.MixProject do
       {:excoveralls, "> 0.0.0", optional: true, only: :test},
       {:ex_doc, "> 0.0.0", optional: true, only: :dev, runtime: false},
       {:styler, "> 0.0.0", optional: true, only: [:dev, :test], runtime: false},
-      {:wx_ex_compiler, "> 0.0.0", runtime: false}
+      {:wx_ex_compiler, "0.4.0", runtime: false}
     ]
   end
 
