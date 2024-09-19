@@ -58,8 +58,23 @@ defmodule WxObjectTest do
       :ok
     end
 
-    test "Wraps :wx_object.start_link/3, and generates a default child_spec/1 implementation" do
+    test "allows a name and options to be specified" do
+      obj = WxObject.start_link(:my_object, BasicWxObject, [], [])
+      assert WxObject.get_pid(obj) == Process.whereis(:my_object)
+    end
+
+    test "allows name and options to be omitted" do
       obj = WxObject.start_link(BasicWxObject, [])
+      assert is_pid(WxObject.get_pid(obj))
+    end
+
+    test "allows a name but no options to be specified" do
+      obj = WxObject.start_link(:my_object, BasicWxObject, [])
+      assert WxObject.get_pid(obj) == Process.whereis(:my_object)
+    end
+
+    test "allows options but no name to be specified" do
+      obj = WxObject.start_link(BasicWxObject, [], [])
       assert is_pid(WxObject.get_pid(obj))
     end
 
