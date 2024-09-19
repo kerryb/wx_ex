@@ -45,6 +45,11 @@ defmodule WxObjectTest do
       send(state.parent, :pong)
       {:noreply, state}
     end
+
+    @impl WxObject
+    def terminate(reason, state) do
+      send(state.parent, {:terminated, reason})
+    end
   end
 
   describe "WxObject" do
@@ -82,9 +87,12 @@ defmodule WxObjectTest do
     end
 
     test "ignores messages when handle_info/2 is not implemented" do
-      obj = WxObject.start_link(BasicWxObject, [])
-      obj |> WxObject.get_pid() |> send(:ping)
-      refute_receive(:pong)
+      obj = WxObject.start_link(FullWxObject, self())
+      WxObject.stop(obj)
+      assert_receive {:terminated, :normal}
+    end
+
+    test "implements stop/3, with a terminate/2 callback" do
     end
   end
 end

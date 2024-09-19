@@ -84,7 +84,10 @@ defmodule WxObject do
               | {:stop, reason :: term(), new_state}
             when new_state: term()
 
-  @optional_callbacks handle_call: 3, handle_cast: 2, handle_info: 2
+  @callback terminate(reason, state :: term()) :: term()
+            when reason: :normal | :shutdown | {:shutdown, term()} | term()
+
+  @optional_callbacks handle_call: 3, handle_cast: 2, handle_info: 2, terminate: 2
 
   def start_link(module, args, options \\ []) do
     :wx_object.start_link(module, args, options)
@@ -104,4 +107,7 @@ defmodule WxObject do
 
   @spec get_pid(:wx.wx_object() | atom() | pid()) :: pid()
   defdelegate get_pid(obj), to: :wx_object
+
+  @spec stop(:wx.wx_object(), term(), timeout()) :: :ok
+  defdelegate stop(server, reason \\ :normal, timeout \\ :infinity), to: :wx_object
 end
