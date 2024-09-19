@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2024-08-26
+## [0.3.0] - 2024-08-31
 
 ### Added
 
-- Initial version, exposing function wrappers for :ex constant macros.
+- Allow one-line setup with `use WxEx`
 
 ## [0.2.0] - 2024-08-31
 
@@ -19,8 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `Records` module, wrapping Erlang records in Elixir `Record`s
 
-## [0.3.0] - 2024-08-31
+## [0.1.0] - 2024-08-26
 
 ### Added
 
-- Allow one-line setup with `use WxEx`
+- Initial version, exposing function wrappers for :ex constant macros.
