@@ -1,10 +1,9 @@
 defmodule WxObject do
   @moduledoc """
-  An Elixir wrapper for Erlang’s `:wx_object` behaviour, inspired by
+  An Elixir wrapper for Erlang’s `:wx_object` behaviour, along the lines of
   `GenServer` etc.
 
-  Does not yet support 100% of `:wx_object`’s API. Specifically,
-  `handle_sync_event/2` is not yet implemented.
+  Does not yet support 100% of `:wx_object`’s API.
 
   Unlike `GenServer`, `WxObject` returns a `wxWindow` reference rather than a
   pid. If you want to include your top level object in your supervision tree,
@@ -16,6 +15,9 @@ defmodule WxObject do
     {:ok, WxObject.get_pid(ref)}
   end
   ```
+
+  For an example of using this module, see
+  [wx_tutorial](https://github.com/kerryb/wx_tutorial).
   """
 
   import WxEx.Records
@@ -114,9 +116,17 @@ defmodule WxObject do
   @spec cast(:wx.wx_object(), term()) :: term
   defdelegate cast(obj, request), to: :wx_object
 
+  @doc """
+  Get the pid of the object handle.
+  """
   @spec get_pid(:wx.wx_object() | atom() | pid()) :: pid()
   defdelegate get_pid(obj), to: :wx_object
 
+  @doc """
+  Stops a `WxObject` server with the given reason. Invokes terminate(reason,
+  state) in the server. The call waits until the process is terminated. If the
+  call times out, or if the process does not exist, an exception is raised.
+  """
   @spec stop(:wx.wx_object(), term(), timeout()) :: :ok
   defdelegate stop(server, reason \\ :normal, timeout \\ :infinity), to: :wx_object
 end

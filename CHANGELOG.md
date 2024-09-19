@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2024-09-19
+
+### Added
+
+- Add handle_sync_event/2 callback to `WxObject`
+
+## [0.4.1] - 2024-09-19
+
+### Changed
+
+- Correct instructions in readme
+
 ## [0.4.0] - 2024-09-19
 
 ### Added
