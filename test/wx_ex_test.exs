@@ -6,8 +6,12 @@ defmodule WxExTest do
   require WxEx.Records
 
   describe "WxEx" do
-    test "Generates wrappers for :ex constant macros" do
-      assert WxEx.Constants.wxALL() == 240
+    test "Generates wrappers for :wx constant macros" do
+      assert WxEx.Constants.Wx.wxALL() == 240
+    end
+
+    test "Generates wrappers for :gl constant macros" do
+      assert WxEx.Constants.Gl.gl_POINT() == 6912
     end
 
     test "Generates wrappers for records in include files" do
