@@ -6,7 +6,7 @@ defmodule WxEx.MixProject do
   def project do
     [
       app: :wx_ex,
-      version: "0.4.1",
+      version: "0.4.2",
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -40,7 +40,7 @@ defmodule WxEx.MixProject do
       {:excoveralls, "> 0.0.0", optional: true, only: :test},
       {:ex_doc, "> 0.0.0", optional: true, only: :dev, runtime: false},
       {:styler, "> 0.0.0", optional: true, only: [:dev, :test], runtime: false},
-      {:wx_ex_compiler, "0.4.0", runtime: false}
+      {:wx_ex_compiler, "0.4.2", runtime: false}
     ]
   end
 
