@@ -7,11 +7,11 @@ defmodule WxExTest do
 
   describe "WxEx" do
     test "Generates wrappers for :wx constant macros" do
-      assert WxEx.Constants.Wx.wxALL() == 240
+      assert WxEx.Constants.WxWidgets.wxALL() == 240
     end
 
     test "Generates wrappers for :gl constant macros" do
-      assert WxEx.Constants.Gl.gl_POINT() == 6912
+      assert WxEx.Constants.OpenGL.gl_POINT() == 6912
     end
 
     test "Generates wrappers for records in include files" do
