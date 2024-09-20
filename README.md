@@ -54,11 +54,6 @@ To import all constants and records in one line:
 use WxEx
 ```
 
-### WxObject
-
-`WxObject` is a `GenServer`-style Elixir wrapper round `:wx_object`. It is
-still a work-in-progress.
-
 ## Development
 
 This library depends on `wx_ex_compiler`, which generates source files and was

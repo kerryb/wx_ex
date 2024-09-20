@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2024-09-20
+
+### Removed
+
+- Removed `WxObject` – turns out it didn’t add enough over just using
+  `:wx_object` directly to be worthwhile.
+
 ## [0.4.1] - 2024-09-19
 
 ### Added
