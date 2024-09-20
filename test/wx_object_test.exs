@@ -112,12 +112,12 @@ defmodule WxObjectTest do
     end
 
     test "ignores messages when handle_info/2 is not implemented" do
-      obj = WxObject.start_link(FullWxObject, self())
-      WxObject.stop(obj)
-      assert_receive {:terminated, :normal}
     end
 
     test "implements stop/3, with a terminate/2 callback" do
+      obj = WxObject.start_link(FullWxObject, self())
+      WxObject.stop(obj)
+      assert_receive {:terminated, :normal}
     end
   end
 end
