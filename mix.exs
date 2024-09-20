@@ -15,14 +15,7 @@ defmodule WxEx.MixProject do
       description: "Elixir wrappers for the Erlang macros in the wx package.",
       source_url: @source_url,
       docs: docs(),
-      test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.html": :test,
-        "coveralls.cobertura": :test
-      ]
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -37,7 +30,6 @@ defmodule WxEx.MixProject do
   defp deps do
     [
       {:dialyxir, "> 0.0.0", optional: true, only: :dev, runtime: false},
-      {:excoveralls, "> 0.0.0", optional: true, only: :test},
       {:ex_doc, "> 0.0.0", optional: true, only: :dev, runtime: false},
       {:styler, "> 0.0.0", optional: true, only: [:dev, :test], runtime: false},
       {:wx_ex_compiler, "0.4.2", runtime: false}
