@@ -106,6 +106,12 @@ defmodule WxObject do
   def start_link(module, args, options), do: :wx_object.start_link(module, args, options)
   def start_link(module, args), do: :wx_object.start_link(module, args, [])
 
+  def start(name, module, args, options) when is_atom(module), do: :wx_object.start({:local, name}, module, args, options)
+
+  def start(name, module, args) when is_atom(module), do: :wx_object.start({:local, name}, module, args, [])
+  def start(module, args, options), do: :wx_object.start(module, args, options)
+  def start(module, args), do: :wx_object.start(module, args, [])
+
   @doc """
   Make a synchronous call to the server and wait for its reply.
   """

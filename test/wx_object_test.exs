@@ -52,10 +52,12 @@ defmodule WxObjectTest do
     end
   end
 
-  describe "WxObject" do
-    setup do
-      :wx.new()
-      :ok
+  describe "WxObject.start_link" do
+    setup :start_wx
+
+    test "links to the current process" do
+      obj = WxObject.start_link(BasicWxObject, [])
+      assert Process.info(WxObject.get_pid(obj), :links) == {:links, [self()]}
     end
 
     test "allows a name and options to be specified" do
@@ -76,6 +78,47 @@ defmodule WxObjectTest do
     test "allows options but no name to be specified" do
       obj = WxObject.start_link(BasicWxObject, [], [])
       assert is_pid(WxObject.get_pid(obj))
+    end
+  end
+
+  describe "WxObject.start" do
+    setup :start_wx
+
+    test "does not link to the current process" do
+      obj = WxObject.start(BasicWxObject, [])
+      assert Process.info(WxObject.get_pid(obj), :links) == {:links, []}
+      WxObject.stop(obj, :normal)
+    end
+
+    test "allows a name and options to be specified" do
+      obj = WxObject.start(:my_object, BasicWxObject, [], [])
+      assert WxObject.get_pid(obj) == Process.whereis(:my_object)
+      WxObject.stop(obj, :normal)
+    end
+
+    test "allows name and options to be omitted" do
+      obj = WxObject.start(BasicWxObject, [])
+      assert is_pid(WxObject.get_pid(obj))
+      WxObject.stop(obj, :normal)
+    end
+
+    test "allows a name but no options to be specified" do
+      obj = WxObject.start(:my_object, BasicWxObject, [])
+      assert WxObject.get_pid(obj) == Process.whereis(:my_object)
+      WxObject.stop(obj, :normal)
+    end
+
+    test "allows options but no name to be specified" do
+      obj = WxObject.start(BasicWxObject, [], [])
+      assert is_pid(WxObject.get_pid(obj))
+      WxObject.stop(obj, :normal)
+    end
+  end
+
+  describe "WxObject" do
+    setup do
+      :wx.new()
+      :ok
     end
 
     test "forwards events" do
@@ -122,5 +165,10 @@ defmodule WxObjectTest do
     test "has a code_change/3 callback" do
       assert {:code_change, 3} in WxObject.behaviour_info(:callbacks)
     end
+  end
+
+  defp start_wx(_context) do
+    :wx.new()
+    :ok
   end
 end
