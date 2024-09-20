@@ -12,7 +12,7 @@ defmodule WxEx.MixProject do
       deps: deps(),
       compilers: [:wx_ex | Mix.compilers()],
       package: package(),
-      description: "Elixir wrappers for the Erlang macros in the wx package.",
+      description: "Elixir wrappers for the Erlang macros and records in the wx package",
       source_url: @source_url,
       docs: docs(),
       test_coverage: [tool: ExCoveralls]

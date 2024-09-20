@@ -2,11 +2,12 @@
 [![Hexdocs.pm](https://img.shields.io/badge/docs-hexdocs.pm-purple)](https://hexdocs.pm/wx_ex/readme.html)
 [![Build](https://img.shields.io/github/actions/workflow/status/kerryb/wx_ex/elixir.yml)](https://github.com/kerryb/wx_ex/actions/workflows/elixir.yml)
 
-Elixir wrappers for the Erlang macros in the `wx` package.
+Elixir wrappers for the Erlang macros and records in the `wx` package.
 
-this library doesn’t wrap any of `wx`’s functions, but exposes the macros for
-constants like `?wxAll` as normal elixir functions (it’s not possible to call
-Erlang macros from Elixir code).
+This library doesn’t wrap any of `wx`’s functions, but exposes the macros for
+constants like `?wxAll` and `?GL_POINT` as normal Elixir functions (it’s not
+possible to call Erlang macros from Elixir code). It also provides Elixir
+`Record` types for the Erlang records in the `:wx` package.
 
 ## Installation
 
@@ -15,19 +16,24 @@ Add `wx_ex` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:wx_ex, "~> 0.4.0", runtime: false}
+    {:wx_ex, "~> 0.5.0"}
   ]
 end
 ```
 
 ## Usage
 
+The simplest way to import all the definitions is to simply `use WxEx`.
+
+If you don’t want to pull everything into your global namespace, you can import
+the invidual module(s) you need, or simply call the functions directly, eg
+`WxEx.Constants.WxWidgets.wxALIGN_RIGHT()`.
+
 ### Constants
 
 ```elixir
+use WxEx
 import Bitwise # to allow ORing of flags with |||
-import WxEx.Constants.WxWidgets
-import WxEx.Constants.OpenGL
 
 panel = :wxPanel.new(frame)
 label = :wxStaticText.new(panel, wxID_ANY(), "A label", style: wxALIGN_RIGHT())
@@ -40,18 +46,10 @@ sizer = :wxBoxSizer.new(wxHORIZONTAL())
 ### Records
 
 ```elixir
-import WxEx.Records
+use WxEx
 
 event = wx() #=> {:wx, :undefined, :undefined, :undefined, :undefined}
 wx(event) #=> [id: :undefined, obj: :undefined, userData: :undefined, event: :undefined]
-```
-
-### Importing everything
-
-To import all constants and records in one line:
-
-```elixir
-use WxEx
 ```
 
 ## Development
