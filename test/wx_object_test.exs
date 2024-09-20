@@ -32,11 +32,6 @@ defmodule WxObjectTest do
     end
 
     @impl WxObject
-    def handle_sync_event(_event, _ref, state) do
-      {:noreply, state}
-    end
-
-    @impl WxObject
     def handle_call(:ping, _from, state), do: {:reply, :pong, state}
 
     @impl WxObject
@@ -89,11 +84,6 @@ defmodule WxObjectTest do
       assert_receive :pong
     end
 
-    test "forwards synchronous events" do
-      # Can’t figure out how to test this with an actual event
-      assert FullWxObject.handle_sync_event(:an_event, :ref, :state) == {:noreply, :state}
-    end
-
     test "forwards calls" do
       obj = WxObject.start_link(FullWxObject, self())
       assert WxObject.call(obj, :ping) == :pong
@@ -121,6 +111,16 @@ defmodule WxObjectTest do
       obj = WxObject.start_link(FullWxObject, self())
       WxObject.stop(obj)
       assert_receive {:terminated, :normal}
+    end
+
+    # Can’t figure out how to test the stuff below with actual events.
+
+    test "has a handle_sync_event/3 callback" do
+      assert {:handle_sync_event, 3} in WxObject.behaviour_info(:callbacks)
+    end
+
+    test "has a code_change/3 callback" do
+      assert {:code_change, 3} in WxObject.behaviour_info(:callbacks)
     end
   end
 end

@@ -95,7 +95,9 @@ defmodule WxObject do
   @callback terminate(reason, state :: term()) :: term()
             when reason: :normal | :shutdown | {:shutdown, term()} | term()
 
-  @optional_callbacks handle_sync_event: 3, handle_call: 3, handle_cast: 2, handle_info: 2, terminate: 2
+  @callback code_change(term() | {:down, term()}, term(), term()) :: {:ok, term()} | {:error, term()}
+
+  @optional_callbacks handle_sync_event: 3, handle_call: 3, handle_cast: 2, handle_info: 2, terminate: 2, code_change: 3
 
   def start_link(name, module, args, options) when is_atom(module),
     do: :wx_object.start_link({:local, name}, module, args, options)
