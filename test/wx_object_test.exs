@@ -112,6 +112,9 @@ defmodule WxObjectTest do
     end
 
     test "ignores messages when handle_info/2 is not implemented" do
+      obj = WxObject.start_link(FullWxObject, self())
+      obj |> WxObject.get_pid() |> send(:ping)
+      assert Process.alive?(WxObject.get_pid(obj))
     end
 
     test "implements stop/3, with a terminate/2 callback" do
