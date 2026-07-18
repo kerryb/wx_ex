@@ -52,6 +52,12 @@ event = wx() #=> {:wx, :undefined, :undefined, :undefined, :undefined}
 wx(event) #=> [id: :undefined, obj: :undefined, userData: :undefined, event: :undefined]
 ```
 
+## Example application
+
+See [wx_tutorial](https://github.com/kerryb/wx_tutorial) for a simple
+application built with wx_ex, based on [this
+tutorial](https://arifishaq.wordpress.com/wp-content/uploads/2017/12/wxerlang-getting-started.pdf).
+
 ## Development
 
 This library depends on `wx_ex_compiler`, which generates source files and was
